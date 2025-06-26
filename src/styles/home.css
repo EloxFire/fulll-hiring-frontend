@@ -1,0 +1,19 @@
+#app{
+  display: flex;
+  flex-direction: column;
+}
+
+.header{
+  background-color: var(--dark-grey);
+  text-align: center;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1{
+    font-size: 20px;
+    color: var(--black);
+    margin: 0;
+  }
+}
