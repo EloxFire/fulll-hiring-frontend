@@ -1,7 +1,7 @@
-import type { User } from "../helpers/types/User.ts";
+import type { User } from "../helpers/types/User";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { GITHUB_SEARCH_USER_API_URL } from "../helpers/constants.ts";
-import { fetchUsers } from "../helpers/fetchUsers.ts";
+import { GITHUB_SEARCH_USER_API_URL } from "../helpers/constants";
+import { fetchUsers } from "../helpers/fetchUsers";
 
 interface UseSearchResult {
   users: User[];
