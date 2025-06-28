@@ -1,12 +1,14 @@
-import type {User} from "../helpers/types/User.ts";
-import {useEffect, useState} from "react";
-import {GITHUB_SEARCH_USER_API_URL} from "../helpers/constants.ts";
+import type { User } from "../helpers/types/User.ts";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { GITHUB_SEARCH_USER_API_URL } from "../helpers/constants.ts";
+import { fetchUsers } from "../helpers/fetchUsers.ts";
 
 interface UseSearchResult {
   users: User[];
   loading: boolean;
   error: string | null;
   hasMore: boolean;
+  loadMore: () => void;
 }
 
 export function useSearch(query: string): UseSearchResult {
@@ -14,61 +16,85 @@ export function useSearch(query: string): UseSearchResult {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(false);
+  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    console.log("Searching for users:", query);
+  const controllerRef = useRef<AbortController | null>(null);
+
+  const initialFetch = useCallback(async () => {
     if (!query) {
       setUsers([]);
       setError(null);
+      setHasMore(false);
+      setNextPageUrl(null);
       return;
     }
 
-    const controller = new AbortController(); // permet d'annuler les appels précédents
-    const timeoutId = setTimeout(() => {
-      setLoading(true);
-      setError(null);
+    if (controllerRef.current) controllerRef.current.abort();
+    controllerRef.current = new AbortController();
 
-      fetch(`${GITHUB_SEARCH_USER_API_URL}${query}`, {
-        signal: controller.signal,
-      })
-        .then(async (res) => {
-          if (res.status === 403) {
-            throw new Error("[403] Limite d'API atteinte.");
-          }
-          if (!res.ok) {
-            throw new Error("Erreur lors de la recherche.");
-          }
+    setLoading(true);
+    setError(null);
 
-          const data = await res.json();
-          setUsers(data.items || []);
+    try {
+      const { users: newUsers, nextPageUrl } = await fetchUsers(
+        `${GITHUB_SEARCH_USER_API_URL}${query}&per_page=100&page=1`,
+        controllerRef.current.signal
+      );
 
-          const linkHeader = res.headers.get("Link");
-          if (linkHeader) {
-            const links = linkHeader.split(", ");
-            const nextLink = links.find((link) => link.includes('rel="next"'));
-            setHasMore(!!nextLink);
-          } else {
-            setHasMore(false);
-          }
+      setUsers(newUsers);
+      setHasMore(nextPageUrl !== null);
+      setNextPageUrl(nextPageUrl);
 
-          if ((data.items || []).length === 0) {
-            setError("Aucun résultat.");
-          }
-        })
-        .catch((err) => {
-          if (err.name !== "AbortError") {
-            setError(err.message);
-            setUsers([]);
-          }
-        })
-        .finally(() => setLoading(false));
-    }, 500); // debounce 500ms
-
-    return () => {
-      clearTimeout(timeoutId); // annule debounce si query change rapidement
-      controller.abort(); // annule le fetch si la recherche change
-    };
+      if (newUsers.length === 0) {
+        setError("Aucun résultat.");
+      }
+    } catch (err: any) {
+      if (err.name !== "AbortError") {
+        setError(err.message);
+        setUsers([]);
+      }
+    } finally {
+      setLoading(false);
+    }
   }, [query]);
 
-  return { users, loading, error, hasMore };
+  const loadMore = useCallback(async () => {
+    if (!nextPageUrl || loading) return;
+
+    if (controllerRef.current) controllerRef.current.abort();
+    controllerRef.current = new AbortController();
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { users: newUsers, nextPageUrl: newNextPageUrl } = await fetchUsers(
+        nextPageUrl,
+        controllerRef.current.signal
+      );
+
+      setUsers((prev) => [...prev, ...newUsers]);
+      setHasMore(newNextPageUrl !== null);
+      setNextPageUrl(newNextPageUrl);
+    } catch (err: any) {
+      if (err.name !== "AbortError") {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [nextPageUrl, loading]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      initialFetch();
+    }, 500); // debounce
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (controllerRef.current) controllerRef.current.abort();
+    };
+  }, [query, initialFetch]);
+
+  return { users, loading, error, hasMore, loadMore };
 }

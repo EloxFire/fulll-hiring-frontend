@@ -8,16 +8,20 @@ interface SearchContextType {
   users: User[];
   loading: boolean;
   error: string | null;
+  hasMore: boolean;
+  loadMore: () => void;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [query, setQuery] = useState<string>("");
-  const { users, loading, error } = useSearch(query);
+  const { users, loading, error, hasMore, loadMore } = useSearch(query);
 
   return (
-    <SearchContext.Provider value={{ query, setQuery, users, loading, error }}>
+    <SearchContext.Provider
+      value={{ query, setQuery, users, loading, error, hasMore, loadMore }}
+    >
       {children}
     </SearchContext.Provider>
   );

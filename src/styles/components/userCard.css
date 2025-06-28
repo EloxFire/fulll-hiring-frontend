@@ -39,5 +39,8 @@
     cursor: pointer;
     text-align: center;
     font-size: 12px;
+    text-decoration: none;
+    margin-top: 10px;
+    color: var(--black)
   }
 }

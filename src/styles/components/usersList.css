@@ -7,4 +7,29 @@
   position: absolute;
   overflow: auto;
   bottom: 0;
+  width: 100%;
+}
+
+.load-more-button {
+  padding: 10px 20px;
+  display: block;
+  background-color: #24292e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  height: 60px;
+}
+
+.load-more-button:hover {
+  background-color: #444c56;
+}
+
+.end-message {
+  text-align: center;
+  margin: 20px;
+  color: #666;
 }

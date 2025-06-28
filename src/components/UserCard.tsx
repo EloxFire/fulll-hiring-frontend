@@ -15,7 +15,7 @@ const UserCard = ({user}: UserCardProps) => {
         <p>{user.id}</p>
         <p>{truncate(capitalize(user.login))}</p>
       </div>
-      <a>View profile</a>
+      <a href={user.html_url} target={'_blank'} rel={"noreferrer"}>View profile</a>
     </div>
   );
 };

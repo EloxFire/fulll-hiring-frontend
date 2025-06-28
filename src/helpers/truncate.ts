@@ -1,4 +1,4 @@
-export const truncate = (text: string, maxLength: number = 12): string => {
+export const truncate = (text: string, maxLength: number = 10): string => {
   if (text.length <= maxLength) {
     return text;
   }
