@@ -2,6 +2,7 @@ import './styles/home.css';
 import SearchInput from "./components/SearchInput.tsx";
 import {SearchProvider} from "./contexts/SearchContext.tsx";
 import UsersList from "./components/UsersList.tsx";
+import ActionBar from "./components/ActionBar.tsx";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
           <h1>Github Search</h1>
         </div>
         <SearchInput />
+        <ActionBar/>
         <UsersList/>
       </div>
     </SearchProvider>

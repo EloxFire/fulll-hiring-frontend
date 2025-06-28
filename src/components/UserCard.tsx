@@ -1,16 +1,25 @@
-import type {User} from "../helpers/types/User.ts";
+import type { User } from "../helpers/types/User.ts";
 import '../styles/components/userCard.css';
-import {capitalize} from "../helpers/capitalize.ts";
-import {truncate} from "../helpers/truncate.ts";
+import { capitalize } from "../helpers/capitalize.ts";
+import { truncate } from "../helpers/truncate.ts";
+import { useSearchContext } from "../contexts/SearchContext.tsx";
 
 interface UserCardProps {
-  user: User
+  user: User;
 }
 
-const UserCard = ({user}: UserCardProps) => {
+const UserCard = ({ user }: UserCardProps) => {
+  const { selectedUserIds, toggleUserSelection } = useSearchContext();
+  const isSelected = selectedUserIds.has(user.id);
+
   return (
-    <div className={"user-card"}>
-      <img src={user.avatar_url} alt={user.login}/>
+    <div className={`user-card ${isSelected ? 'selected' : ''}`}>
+      <input
+        type="checkbox"
+        checked={isSelected}
+        onChange={() => toggleUserSelection(user.id)}
+      />
+      <img src={user.avatar_url} alt={user.login} />
       <div className={"user-info"}>
         <p>{user.id}</p>
         <p>{truncate(capitalize(user.login))}</p>

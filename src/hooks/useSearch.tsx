@@ -5,6 +5,7 @@ import { fetchUsers } from "../helpers/fetchUsers.ts";
 
 interface UseSearchResult {
   users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   loading: boolean;
   error: string | null;
   hasMore: boolean;
@@ -96,5 +97,5 @@ export function useSearch(query: string): UseSearchResult {
     };
   }, [query, initialFetch]);
 
-  return { users, loading, error, hasMore, loadMore };
+  return { users, setUsers, loading, error, hasMore, loadMore };
 }
