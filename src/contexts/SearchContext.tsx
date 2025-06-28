@@ -19,12 +19,18 @@ interface SearchContextType {
   deleteSelectedUsers: () => void;
 }
 
+// Création d'un contexte pour la recherche d'utilisateurs
+// ce contexte va permettre de partager l'état de la recherche
+// mais aussi les fonctions de gestion des utilisateurs sélectionnés
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [query, setQuery] = useState<string>("");
   const { users, setUsers, loading, error, hasMore, loadMore } = useSearch(query);
 
+  // On utilise un Set plutot qu'un tableau pour stocker les IDs des utilisateurs sélectionnés
+  // car cela permet de gérer plus facilement les sélections multiples
+  // et d'éviter les doublons.
   const [selectedUserIds, setSelectedUserIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -53,11 +59,11 @@ export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const duplicateSelectedUsers = () => {
     const selectedUsers = users.filter(user => selectedUserIds.has(user.id));
-    const duplicatedUsers = selectedUsers.map(user => ({
+    const duplicatedUsers = selectedUsers.map((user: User) => ({
       ...user,
-      id: 1111 + user.id, // ID unique fake
+      id: 1111 + user.id, // Création d'un nouvel ID pour le duplicata (exemple simple) C'est nécéssaire car le Set ne permet pas d'avoir deux fois le même ID
     }));
-    // Ajoute les duplicata à la liste
+    // Ajoute les éléments dupliqués à la liste
     setUsers(prev => [...prev, ...duplicatedUsers]);
     clearSelection();
   };

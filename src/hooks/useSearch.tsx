@@ -30,6 +30,7 @@ export function useSearch(query: string): UseSearchResult {
       return;
     }
 
+    // Création d'un AbortController pour annuler une requête si besoin
     if (controllerRef.current) controllerRef.current.abort();
     controllerRef.current = new AbortController();
 
@@ -37,6 +38,10 @@ export function useSearch(query: string): UseSearchResult {
     setError(null);
 
     try {
+      // Utilisation de la fonction fetchUsers pour récupérer les utilisateurs
+      // avec la requête de recherche et l'Abort controller
+      // Je demande 100 résultats par page pour limiter le nombre de requêtes
+      // mais aussi pour avoir un bon nombre de résultats à afficher.
       const { users: newUsers, nextPageUrl } = await fetchUsers(
         `${GITHUB_SEARCH_USER_API_URL}${query}&per_page=100&page=1`,
         controllerRef.current.signal
@@ -59,6 +64,11 @@ export function useSearch(query: string): UseSearchResult {
     }
   }, [query]);
 
+  // La fonction loadMore est utilisée pour charger plus de résultats
+  // lorsque l'utilisateur atteint le bas de la liste.
+
+  // Elle utilise un useCallback pour éviter de recréer la fonction à chaque rendu,
+  // ce qui est important pour la performance.
   const loadMore = useCallback(async () => {
     if (!nextPageUrl || loading) return;
 
@@ -86,16 +96,21 @@ export function useSearch(query: string): UseSearchResult {
     }
   }, [nextPageUrl, loading]);
 
+  // Ici on créée un effet de debounce pour éviter de faire une requête
+  // à chaque frappe de l'utilisateur. On attend 500ms après la dernière frappe
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       initialFetch();
     }, 500); // debounce
 
+    // Ici je clear le timeout et j'annule la requête en cours
+    // si le composant est démonté ou si la requête change
     return () => {
       clearTimeout(timeoutId);
       if (controllerRef.current) controllerRef.current.abort();
     };
   }, [query, initialFetch]);
 
+  // On renvoie les données nécessaires pour utiliser ce hook
   return { users, setUsers, loading, error, hasMore, loadMore };
 }
