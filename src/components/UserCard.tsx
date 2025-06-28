@@ -21,7 +21,7 @@ const UserCard = ({ user }: UserCardProps) => {
       />
       <img src={user.avatar_url} alt={user.login} />
       <div className={"user-info"}>
-        <p>{user.id}</p>
+        <p>{truncate(user.id.toString())}</p>
         <p>{truncate(capitalize(user.login))}</p>
       </div>
       <a href={user.html_url} target={'_blank'} rel={"noreferrer"}>View profile</a>

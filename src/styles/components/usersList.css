@@ -8,12 +8,15 @@
   overflow: auto;
   bottom: 0;
   width: 100%;
+  border: 1px solid var(--black);
+
 }
 
 .load-more-button {
+  margin: 5px;
   padding: 10px 20px;
   display: block;
-  background-color: #24292e;
+  background-color: var(--black);
   color: white;
   border: none;
   border-radius: 4px;
@@ -25,7 +28,7 @@
 }
 
 .load-more-button:hover {
-  background-color: #444c56;
+  background-color: var(--dark-grey);
 }
 
 .end-message {

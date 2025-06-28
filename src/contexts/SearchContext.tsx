@@ -61,7 +61,7 @@ export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const selectedUsers = users.filter(user => selectedUserIds.has(user.id));
     const duplicatedUsers = selectedUsers.map((user: User) => ({
       ...user,
-      id: 1111 + user.id, // Création d'un nouvel ID pour le duplicata (exemple simple) C'est nécéssaire car le Set ne permet pas d'avoir deux fois le même ID
+      id: Math.round(new Date().getTime()) + user.id, // Création d'un nouvel ID pour le duplicata (exemple simple) C'est nécéssaire car le Set ne permet pas d'avoir deux fois le même ID
     }));
     // Ajoute les éléments dupliqués à la liste
     setUsers(prev => [...prev, ...duplicatedUsers]);
