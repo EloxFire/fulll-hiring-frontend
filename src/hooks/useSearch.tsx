@@ -6,12 +6,14 @@ interface UseSearchResult {
   users: User[];
   loading: boolean;
   error: string | null;
+  hasMore: boolean;
 }
 
 export function useSearch(query: string): UseSearchResult {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
     console.log("Searching for users:", query);
@@ -39,6 +41,16 @@ export function useSearch(query: string): UseSearchResult {
 
           const data = await res.json();
           setUsers(data.items || []);
+
+          const linkHeader = res.headers.get("Link");
+          if (linkHeader) {
+            const links = linkHeader.split(", ");
+            const nextLink = links.find((link) => link.includes('rel="next"'));
+            setHasMore(!!nextLink);
+          } else {
+            setHasMore(false);
+          }
+
           if ((data.items || []).length === 0) {
             setError("Aucun résultat.");
           }
@@ -58,5 +70,5 @@ export function useSearch(query: string): UseSearchResult {
     };
   }, [query]);
 
-  return { users, loading, error };
+  return { users, loading, error, hasMore };
 }

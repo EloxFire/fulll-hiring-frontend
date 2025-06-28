@@ -11,6 +11,11 @@ Créer une application React qui récupère la liste des utilisateurs de Github 
 - TypeScript
 - Vite (create-react-app étant déprécié)
 
+### Contraintes
+- Pas d'utilisation de libs externes (sauf lib de tests)
+- Gestions des exceptions et erreurs de l'API
+- Ajout d'une "barre d'action" coté client (duplication et modification d'éléments)
+
 ### Installation
 1. Cloner le répo `git clone https://github.com/EloxFire/fulll-hiring-algo.git`
 2. Installer les dépendances avec `npm install`

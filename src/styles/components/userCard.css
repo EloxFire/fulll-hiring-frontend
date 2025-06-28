@@ -4,11 +4,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 5px;
   position: relative;
+  max-height:  200px;
+
+  .user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    p{
+      font-size: 15px;
+    }
+  }
 
   img{
     width: 50px;
@@ -17,11 +30,14 @@
     margin-bottom: 10px;
   }
 
-  button{
+  a{
     background-color:  var(--blue);
     border: none;
     outline: none;
     border-radius: 8px;
-    padding: 5px
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
   }
 }

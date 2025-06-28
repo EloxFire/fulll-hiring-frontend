@@ -1,0 +1,10 @@
+.users-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 70%;
+  position: absolute;
+  overflow: auto;
+  bottom: 0;
+}
