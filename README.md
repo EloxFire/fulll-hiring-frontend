@@ -86,3 +86,30 @@ IL est aussi présent afin d'éviter un `scroll infini` et donc de saturer la li
       - deleteSelectedUsers() : supprime localement les utilisateurs sélectionnés.
 
 Le contexte réinitialise automatiquement les suppressions et duplications lors d'une nouvelle recherche.
+
+## Tests
+
+Ce projet utilise **Vitest** pour les tests unitaires et d'intégration.
+C'est la première fois que je rédige des tests et que j'utilise de manière générale une library de tests.
+
+Je me suis aidé de vidéos Youtube, de forums et de la documentation pour essayer de rédiger des tests pertinants.
+
+Lancer les tests :
+```bash
+npm run test
+```
+
+### Problématiques rencontrées :
+- Configuration : J'ai passé pas mal de temps sur la configuration, et notemment l'activation des "matchers enrichis" (`.toBeInTheDocument()` par exemple) pour les tests de rendu.
+  - La solution était dans l'ajout de `types` dans le `tsconfig` et l'ajout d'un fichier `setup.ts` pour vitest.
+- Déterminer quoi tester et surtout comment construire les tests.
+  - J'ai essayé de me concentrer sur les fonctionnalités principales et les interactions utilisateur.
+  - J'ai essayé de tester la logique des composants et non pas simplement le rendu.
+- Utilisation des Mocks et Spies.
+  - J'ai utilisé `vi.fn()` pour créer des fonctions mock et vérifier leur appel.
+  - J'ai utilisé `vi.spyOn()` pour espionner les méthodes des hooks et vérifier leur comportement.
+  - `vi.spyOn()` est un concept qui m'est encore un peu flou, mais j'ai essayé de l'implémenter du mieux possible.
+- Timers et Debounce.
+  - J'ai essayé d'utiliser `vi.useFakeTimers()`, `vi.advanceTimersByTime()` pour simuler le passage du temps dans les tests de debounce, mais je n'ai pas réussi à les faire fonctionner correctement.
+  - Le test du hook `useSearch` ne passe donc pas. `expect(fetchUsersSpy).toHaveBeenCalled();` ne passe pas. 
+  - J'arrive aujourd'hui à la fin du délais pour rendre le projet, donc je n'ai pas pu approfondir cette partie.

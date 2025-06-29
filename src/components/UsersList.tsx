@@ -6,7 +6,6 @@ const UsersList = () => {
   const { users, loading, error, hasMore, loadMore } = useSearchContext();
 
   if (error) return <p className="error-message">{error}</p>;
-  if (users.length === 0 && !loading) return <p className="error-message">Aucun utilisateur trouvé.</p>;
 
   return (
     <div className="users-list">

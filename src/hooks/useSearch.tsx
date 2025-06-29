@@ -52,7 +52,7 @@ export function useSearch(query: string): UseSearchResult {
       setNextPageUrl(nextPageUrl);
 
       if (newUsers.length === 0) {
-        setError("Aucun résultat.");
+        setError(`Aucun utilisateur trouvé pour la requête "${query}".`);
       }
     } catch (err: any) {
       if (err.name !== "AbortError") {
