@@ -22,7 +22,7 @@ Application **React + TypeScript** permettant de rechercher des utilisateurs Git
 
 - ReactJS
 - TypeScript
-- Vite
+- Vite (create-react-app étant déprécié)
 - CSS modules
 
 
