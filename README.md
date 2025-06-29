@@ -9,6 +9,15 @@
 Application **React + TypeScript** permettant de rechercher des utilisateurs GitHub en **requêtes instantanées**, avec affichage de résultats paginés et gestion d’actions locales (**duplication, suppression, sélection**).
 
 
+## Sommaire
+1. [Technologies utilisées](#technologies-utilisées)
+2. [Contraintes techniques](#contraintes-techniques)
+3. [Installation](#installation)
+4. [Fonctionnalités](#fonctionnalités)
+5. [Tests](#tests)
+   - [Problématiques rencontrées](#problématiques-rencontrées)
+
+
 ## Technologies utilisées
 
 - ReactJS
@@ -110,6 +119,6 @@ npm run test
   - J'ai utilisé `vi.spyOn()` pour espionner les méthodes des hooks et vérifier leur comportement.
   - `vi.spyOn()` est un concept qui m'est encore un peu flou, mais j'ai essayé de l'implémenter du mieux possible.
 - Timers et Debounce.
-  - J'ai essayé d'utiliser `vi.useFakeTimers()`, `vi.advanceTimersByTime()` pour simuler le passage du temps dans les tests de debounce, mais je n'ai pas réussi à les faire fonctionner correctement.
+  - J'ai essayé d'utiliser `vi.useFakeTimers()`, `vi.advanceTimersByTime()` pour simuler des temps d'attente et donc simuler le debounce de la fonction, mais je n'ai pas réussi à les faire fonctionner correctement.
   - Le test du hook `useSearch` ne passe donc pas. `expect(fetchUsersSpy).toHaveBeenCalled();` ne passe pas. 
   - J'arrive aujourd'hui à la fin du délais pour rendre le projet, donc je n'ai pas pu approfondir cette partie.
