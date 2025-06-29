@@ -32,6 +32,7 @@ Application **React + TypeScript** permettant de rechercher des utilisateurs Git
 - Gestion des erreurs API GitHub
 - Respect des bonnes pratiques React et TypeScript
 - **Action bar client-side** (duplication/suppression)
+- Tests
 
 
 ## Installation
