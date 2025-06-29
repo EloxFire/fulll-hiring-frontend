@@ -22,7 +22,7 @@ interface SearchContextType {
 // Création d'un contexte pour la recherche d'utilisateurs
 // ce contexte va permettre de partager l'état de la recherche
 // mais aussi les fonctions de gestion des utilisateurs sélectionnés
-const SearchContext = createContext<SearchContextType | undefined>(undefined);
+export const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [query, setQuery] = useState<string>("");
