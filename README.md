@@ -62,10 +62,9 @@ http://localhost:5173
 - Debounce de 500 ms pour éviter de saturer l’API.
 - Affichage des 100 premiers résultats, avec bouton "Voir plus" pour charger la suite manuellement.
 - Checkbox de sélection sur chaque carte utilisateur.
-- Duplication locale des utilisateurs sélectionnés avec ID local unique.
+- Duplication locale des utilisateurs sélectionnés.
 - Suppression locale des utilisateurs sélectionnés.
 - Réinitialisation de la sélection et des duplications/suppressions lors d’une nouvelle recherche.
-- Responsive mobile et desktop.
 
 ## Architecture détaillée
 - useSearch
@@ -81,10 +80,10 @@ http://localhost:5173
     - setUsers() : permet au contexte de dupliquer ou supprimer des éléments.
 
 Le bouton "Voir plus" permet de charger les résultats suivants en utilisant la fonction `loadMore()`.
-IL est aussi présent afin d'éviter un `scroll infini` et donc de saturer la limite GitHub.
+Il est aussi présent afin d'éviter un `scroll infini` et donc de saturer la limite de l'API GitHub.
 
 - searchContext
-  - Rôle : Permet une gestion globale et propre des éléments suivants :
+  - Rôle : Permet une gestion globale des éléments suivants :
     - La recherche (query et setQuery).
     - L'affichage des utilisateurs (users, setUsers).
     - La sélection via selectedUserIds (Set<number>).
