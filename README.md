@@ -14,8 +14,8 @@ Application **React + TypeScript** permettant de rechercher des utilisateurs Git
 2. [Contraintes techniques](#contraintes-techniques)
 3. [Installation](#installation)
 4. [Fonctionnalités](#fonctionnalités)
-5. [Tests](#tests)
-   - [Problématiques rencontrées](#problématiques-rencontrées)
+5. [Architecture détaillée](#architecture-détaillée)
+6. [Tests](#tests)
 
 
 ## Technologies utilisées
