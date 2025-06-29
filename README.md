@@ -8,6 +8,7 @@
 
 Application **React + TypeScript** permettant de rechercher des utilisateurs GitHub en **requêtes instantanées**, avec affichage de résultats paginés et gestion d’actions locales (**duplication, suppression, sélection**).
 
+Repo et consigne : [Répertoire Fulll](https://github.com/fulll/hiring/blob/master/Frontend/github-user-search-intermediaire-senior.md)
 
 ## Sommaire
 1. [Technologies utilisées](#technologies-utilisées)
