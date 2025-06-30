@@ -3,8 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import {SearchProvider} from "../contexts/SearchContext";
 import SearchInput from "../components/SearchInput";
 
-describe('SearchInput', () => {
-  it('renders input and updates value on typing', () => {
+describe('TEST SEARCH INPUT', () => {
+  it('Rends \'input de recherche et teste la saisie d\'un texte', () => {
     render(
       <SearchProvider>
         <SearchInput />

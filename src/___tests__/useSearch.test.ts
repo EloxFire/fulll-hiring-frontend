@@ -8,7 +8,7 @@ const mockUsers: User[] = [
   { id: 1, login: 'octocat', avatar_url: '', html_url: '' },
 ];
 
-describe('useSearch', () => {
+describe('TEST USESEARCH', () => {
   const fetchUsersSpy = vi.spyOn(fetchUsersModule, 'fetchUsers');
 
   beforeEach(() => {
