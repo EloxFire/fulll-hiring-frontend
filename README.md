@@ -122,4 +122,5 @@ npm run test
 - Timers et Debounce.
   - J'ai essayé d'utiliser `vi.useFakeTimers()`, `vi.advanceTimersByTime()` pour simuler des temps d'attente et donc simuler le debounce de la fonction, mais je n'ai pas réussi à les faire fonctionner correctement.
   - Le test du hook `useSearch` ne passe donc pas. `expect(fetchUsersSpy).toHaveBeenCalled();` ne passe pas. 
+  - Je pense que le problème est au niveau de mon utilisation du `fetchUsersSpy.mockResolvedValue`.
   - J'arrive aujourd'hui à la fin du délais pour rendre le projet, donc je n'ai pas pu approfondir cette partie.

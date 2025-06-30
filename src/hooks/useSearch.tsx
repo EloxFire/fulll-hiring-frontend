@@ -1,7 +1,7 @@
-import type { User } from "../helpers/types/User";
+import type { User } from "../types/User";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { GITHUB_SEARCH_USER_API_URL } from "../helpers/constants";
-import { fetchUsers } from "../helpers/fetchUsers";
+import { GITHUB_SEARCH_USER_API_URL } from "../helpers/api/urls";
+import { fetchUsers } from "../helpers/api/fetchUsers";
 
 interface UseSearchResult {
   users: User[];
@@ -54,9 +54,14 @@ export function useSearch(query: string): UseSearchResult {
       if (newUsers.length === 0) {
         setError(`Aucun utilisateur trouvé pour la requête "${query}".`);
       }
-    } catch (err: any) {
-      if (err.name !== "AbortError") {
-        setError(err.message);
+    } catch (err: unknown) {
+      if(err instanceof  Error) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+          setUsers([]);
+        }
+      }else{
+        setError("Une erreur inconnue inconnue est survenue lors de la recherche.");
         setUsers([]);
       }
     } finally {
@@ -87,9 +92,13 @@ export function useSearch(query: string): UseSearchResult {
       setUsers((prev) => [...prev, ...newUsers]);
       setHasMore(newNextPageUrl !== null);
       setNextPageUrl(newNextPageUrl);
-    } catch (err: any) {
-      if (err.name !== "AbortError") {
-        setError(err.message);
+    } catch (err: unknown) {
+      if(err instanceof  Error) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
+      }else {
+        setError("Une erreur inconnue inconnue est survenue lors du chargement des utilisateurs.");
       }
     } finally {
       setLoading(false);

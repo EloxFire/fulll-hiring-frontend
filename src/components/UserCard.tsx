@@ -1,4 +1,4 @@
-import type { User } from "../helpers/types/User.ts";
+import type { User } from "../types/User.ts";
 import '../styles/components/userCard.css';
 import { capitalize } from "../helpers/capitalize.ts";
 import { truncate } from "../helpers/truncate.ts";

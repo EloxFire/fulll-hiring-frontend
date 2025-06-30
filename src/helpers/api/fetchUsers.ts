@@ -1,4 +1,4 @@
-import type { User } from "./types/User.ts";
+import type { User } from "../../types/User.ts";
 
 interface FetchUsersResult {
   users: User[];

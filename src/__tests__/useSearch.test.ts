@@ -1,8 +1,8 @@
 import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import type {User} from "../helpers/types/User";
+import type {User} from "../types/User";
 import {useSearch} from "../hooks/useSearch";
-import * as fetchUsersModule from '../helpers/fetchUsers';
+import * as fetchUsersModule from '../helpers/api/fetchUsers';
 
 const mockUsers: User[] = [
   { id: 1, login: 'octocat', avatar_url: '', html_url: '' },
@@ -36,11 +36,12 @@ describe('TEST USESEARCH', () => {
       await Promise.resolve();
     });
 
-    // flush final pour s'assurer que tout est résolu
-    await act(async () => {});
 
     expect(fetchUsersSpy).toHaveBeenCalled();
     expect(result.current.users).toEqual(mockUsers);
+
+    // flush final pour s'assurer que tout est résolu
+    await act(async () => {});
   });
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it, expect, vi} from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import type {User} from "../helpers/types/User";
+import type {User} from "../types/User";
 import ActionBar from "../components/ActionBar";
 import {SearchContext} from "../contexts/SearchContext";
 
