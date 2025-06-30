@@ -32,8 +32,8 @@ describe('TEST USESEARCH', () => {
 
     await act(async () => {
       rerender({ query: 'octocat' });
-      vi.advanceTimersByTime(500); // simulate debounce
-      await Promise.resolve();      // flush microtasks
+      vi.advanceTimersByTime(500); // Simule le debounce
+      await Promise.resolve();
     });
 
     // flush final pour s'assurer que tout est résolu
